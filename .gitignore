@@ -13,3 +13,6 @@
 
 # External dependencies
 vendor/*
+
+# The main binary
+goburpsequence
