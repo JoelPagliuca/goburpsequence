@@ -5,8 +5,15 @@ import (
 	"fmt"
 )
 
+// VERSION program version
+var VERSION string
+
+// GITCOMMIT commit hash that we built from
+var GITCOMMIT string
+
 func usage() {
 	fmt.Println("goburpsequence!")
+	fmt.Println("version:", VERSION, "commit:", GITCOMMIT)
 	fmt.Println("")
 	flag.PrintDefaults()
 }

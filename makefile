@@ -1,5 +1,14 @@
 NAME := goburpsequence
+PKG := github.com/JoelPagliuca/$(NAME)
+
 VERSION := $(shell cat VERSION.txt)
+GITCOMMIT := $(shell git rev-parse --short HEAD)
+GITUNTRACKEDCHANGES := $(shell git status --porcelain --untracked-files=no)
+ifneq ($(GITUNTRACKEDCHANGES),)
+	GITCOMMIT := $(GITCOMMIT)-dirty
+endif
+
+GO_LDFLAGS=-ldflags "-w -X main.GITCOMMIT=$(GITCOMMIT) -X main.VERSION=$(VERSION)"
 
 .PHONY: help
 help: ## Print this message and exit
@@ -10,7 +19,7 @@ build: $(NAME) ## Builds a dynamic executable or package
 
 $(NAME): $(wildcard *.go) VERSION.txt
 	@echo "+ $@"
-	go build -o $(NAME) .
+	go build $(GO_LDFLAGS) -o $(NAME) .
 
 .PHONY: test
 test: ## Runs the go tests
@@ -21,3 +30,8 @@ test: ## Runs the go tests
 vet: ## Verifies `go vet` passes
 	@echo "+ $@"
 	@go vet $(shell go list ./... | grep -v vendor)
+
+.PHONY: clean
+clean: ## Cleanup any build binaries or packages
+	@echo "+ $@"
+	$(RM) $(NAME)
