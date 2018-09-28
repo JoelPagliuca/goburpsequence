@@ -19,14 +19,15 @@ func FileToPlantURL(filename string) string {
 		os.Exit(1)
 	}
 	deflatedData := deflate(diagramData)
+	fmt.Println(string(deflatedData[:]))
 	encodedData := encode(deflatedData)
 	return string(encodedData)
 }
 
 func deflate(input []byte) []byte {
 	var output bytes.Buffer
-	writer, _ := flate.NewWriter(&output, flate.DefaultCompression)
-	defer writer.Close()
+	writer, _ := flate.NewWriter(&output, flate.HuffmanOnly)
+	// defer writer.Close()
 	writer.Write(input)
 	writer.Flush()
 	return output.Bytes()
