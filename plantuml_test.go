@@ -1,6 +1,8 @@
 package main
 
 import "testing"
+import "fmt"
+import "net/http"
 
 func TestToPlantURL(t *testing.T) {
 	type args struct {
@@ -16,6 +18,8 @@ func TestToPlantURL(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := FileToPlantURL(tt.args.filename); got != tt.want {
+				resp, _ := http.Get("http://www.plantuml.com/plantuml/uml/" + got)
+				fmt.Println("Status:", resp.StatusCode)
 				t.Errorf("ToPlantURL() = %v, want %v", got, tt.want)
 			}
 		})
