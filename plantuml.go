@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"compress/zlib"
+	"compress/flate"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -25,7 +25,7 @@ func FileToPlantURL(filename string) string {
 
 func deflate(input []byte) []byte {
 	var output bytes.Buffer
-	writer := zlib.NewWriter(&output)
+	writer, _ := flate.NewWriter(&output, flate.DefaultCompression)
 	defer writer.Close()
 	writer.Write(input)
 	writer.Flush()
