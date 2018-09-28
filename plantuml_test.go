@@ -15,7 +15,7 @@ func TestToPlantURL(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ToPlantURL(tt.args.filename); got != tt.want {
+			if got := FileToPlantURL(tt.args.filename); got != tt.want {
 				t.Errorf("ToPlantURL() = %v, want %v", got, tt.want)
 			}
 		})

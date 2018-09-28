@@ -7,7 +7,6 @@ import (
 )
 
 func TestReadBurpFile(t *testing.T) {
-	fmt.Println("\nItems:")
 	items := ReadBurpFile("./test/data/items.xml")
 
 	for idx, item := range items.Items {
